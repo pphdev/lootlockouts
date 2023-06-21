@@ -1,0 +1,2 @@
+# lootlockouts
+LootLockouts for Legion
