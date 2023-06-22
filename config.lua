@@ -70,7 +70,7 @@ function Config:CreateMenu()
   UIConfig.title:ClearAllPoints();
   UIConfig.title:SetFontObject("GameFontHighlight");
   UIConfig.title:SetPoint("LEFT", UIConfig.Title, "LEFT", 5, -6);
-  UIConfig.title:SetText("LootLockouts");
+  UIConfig.title:SetText("LootLockouts by Wáyne/Tho");
 
   -- Creating Scroll Frame
   UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate");
@@ -151,7 +151,7 @@ function Config:CreateMenu()
       
       UIConfig.checkBtn:Hide();
       UIConfig.rescanBtn:Show();
-      print("Check Ende");
+      -- print("Check Ende");
   end
 
   -- Check Button
