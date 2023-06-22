@@ -70,7 +70,7 @@ function core:init(event, name)
   end)
   
 
-  core:Print();
+  -- core:Print();
 
 end;
 

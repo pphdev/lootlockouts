@@ -16,7 +16,7 @@ InstanceData.hov = {"Hymdall", "Hyrja", "Fenryr", "Skovald", "Odyn"};
 InstanceData.vio = {"Festerface", "Shivermaw", "Blood-Princess Thal'ena", "Mindflayer Kaahrj", "\n", "Millificent Manastorm", "Anub'esset", "Sael'orn", "Fel Lord Betrug"}
 
 
-InstanceData.instances = {DHT = InstanceData.dht, NHL = InstanceData.nhl, COS = InstanceData.cos, BRH = InstanceData.brh,
+InstanceData.instances = {NHL = InstanceData.nhl, DHT = InstanceData.dht, COS = InstanceData.cos, BRH = InstanceData.brh,
                       VOTW = InstanceData.votw, MOS = InstanceData.mos, ARC = InstanceData.arc, HOV = InstanceData.hov, VIO = InstanceData.vio,
                     EOA = InstanceData.eoa};
 

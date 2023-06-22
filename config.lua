@@ -21,7 +21,7 @@ function Config:Toggle()
     core.InfoHandler.GetData();
     denyDataCall = true ;
   end
-  print("Toggle Funktion fertig");
+  -- print("Toggle Funktion fertig");
 end
 
 function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text, width, height)
