@@ -11,7 +11,7 @@
 
 
   function InfoHandler:GetData()
-    print("GetData aufgerufen");
+    -- print("GetData aufgerufen");
     SendChatMessage(".loot_cd" ,"SAY", nil);
       core.DataFrame:RegisterEvent("CHAT_MSG_SYSTEM");
       core.DataFrame:SetScript("OnEvent", function(DataFrame, event, ...)
@@ -37,6 +37,6 @@
       end)
         -- core.DataFrame:Hide() 
     --  print(core.lastMessage)
-    print(#core.lastMessageArray)
-    print("Get Data fertig");
+    -- print(#core.lastMessageArray)
+    -- print("Get Data fertig");
   end;
