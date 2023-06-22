@@ -53,40 +53,22 @@ function core:init(event, name)
   minimapFrame:SetScript("OnClick", function(self, button)
     core.Config:Toggle();
   end)
-  --  local texture = minimapFrame:CreateTexture(nil, "BACKGROUND")
-  --  texture:SetTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
-  --   -- texture:SetTexCoord(0, 1, 0, 1)
-  --  texture:SetAllPoints(minimapFrame)
-  --  minimapFrame.texture = texture;
+   local texture = minimapFrame:CreateTexture(nil, "BACKGROUND")
+   texture:SetTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
+    -- texture:SetTexCoord(0, 1, 0, 1)
+   texture:SetAllPoints(minimapFrame)
+   minimapFrame.texture = texture;
 
-  --  minimapFrame:EnableMouse(true)
-  --  minimapFrame:SetMovable(true)
-  --  minimapFrame:RegisterForDrag("LeftButton")
-  --  minimapFrame:SetScript("OnDragStart", function(self)
-  --     self:StartMoving()
-  -- end)
-  -- minimapFrame:SetScript("OnDragStop", function(self)
-  --     self:StopMovingOrSizing()
-  -- end)
+   minimapFrame:EnableMouse(true)
+   minimapFrame:SetMovable(true)
+   minimapFrame:RegisterForDrag("LeftButton")
+   minimapFrame:SetScript("OnDragStart", function(self)
+      self:StartMoving()
+  end)
+  minimapFrame:SetScript("OnDragStop", function(self)
+      self:StopMovingOrSizing()
+  end)
   
-  local function UpdateMinimapButtonPosition()
-    local x = radius * cos(angle)
-    local y = radius * sin(angle)
-
-    minimapFrame:SetPoint("CENTER", Minimap, "CENTER", x, y)
-end
-
-minimapFrame:EnableMouse(true)
-minimapFrame:SetMovable(true)
-minimapFrame:RegisterForDrag("LeftButton")
-minimapFrame:SetScript("OnDragStart", function(self)
-    self:StartMoving()
-end)
-minimapFrame:SetScript("OnDragStop", function(self)
-    self:StopMovingOrSizing()
-    UpdateMinimapButtonPosition()
-end)
-
 
   core:Print();
 
