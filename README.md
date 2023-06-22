@@ -1,4 +1,4 @@
 # LootLockouts Addon
 LootLockouts Addon for Legion
 
-For personal use only. Rights belong to pphdev. Modification and Distribution prohibited.
+<i>For personal use only. Rights belong to pphdev. Modification and Distribution prohibited.</i>
