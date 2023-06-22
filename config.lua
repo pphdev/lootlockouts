@@ -116,9 +116,10 @@ function Config:CreateMenu()
         end
   
         local coloredOutputStr = "";
+        local conBossTable = table.concat(bossIsDone, " ");
         for key1, value3 in pairs(bossTable) do
           -- red coloring string
-          if bossIsDone[key1] == value3 then
+          if string.find(conBossTable, value3) then
             local coloredStr = string.format("|cffff0000%s|r", value3)
             coloredOutputStr = string.join(" ", coloredOutputStr, coloredStr);
             -- print(value3);
@@ -126,7 +127,6 @@ function Config:CreateMenu()
             -- green coloring string
             local coloredStr = string.format("|cff00ff00%s|r", value3)
             coloredOutputStr = string.join(" ", coloredOutputStr, coloredStr);
-            -- print(bossIsDone[key1]);
           end
         end
           -- print(Helpers:getTableLen(labelArray))       
