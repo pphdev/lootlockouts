@@ -53,22 +53,31 @@ function core:init(event, name)
   minimapFrame:SetScript("OnClick", function(self, button)
     core.Config:Toggle();
   end)
-   local texture = minimapFrame:CreateTexture(nil, "BACKGROUND")
-   texture:SetTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
-    -- texture:SetTexCoord(0, 1, 0, 1)
-   texture:SetAllPoints(minimapFrame)
-   minimapFrame.texture = texture;
+  local texture = minimapFrame:CreateTexture(nil, "BACKGROUND")
+  texture:SetTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
+  -- texture:SetTexCoord(0, 1, 0, 1)
+  texture:SetAllPoints(minimapFrame)
+  minimapFrame.texture = texture;
 
-   minimapFrame:EnableMouse(true)
-   minimapFrame:SetMovable(true)
-   minimapFrame:RegisterForDrag("LeftButton")
-   minimapFrame:SetScript("OnDragStart", function(self)
-      self:StartMoving()
+  minimapFrame:EnableMouse(true)
+  minimapFrame:SetMovable(true)
+  minimapFrame:RegisterForDrag("LeftButton")
+  minimapFrame:SetScript("OnDragStart", function(self)
+    self:StartMoving()
   end)
   minimapFrame:SetScript("OnDragStop", function(self)
       self:StopMovingOrSizing()
   end)
   
+  minimapFrame:SetScript("OnEnter", function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+    GameTooltip:SetText("LootLockouts")
+    GameTooltip:Show()
+  end)
+
+  minimapFrame:SetScript("OnLeave", function(self)
+    GameTooltip:Hide()
+  end)
 
   -- core:Print();
 
