@@ -1,2 +1,2 @@
-# lootlockouts
-LootLockouts for Legion
+# LootLockouts Addon
+LootLockouts Addon for Legion
