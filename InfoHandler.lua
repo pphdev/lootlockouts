@@ -4,11 +4,11 @@
   core.lastMessage = nil;
   core.lastMessageArray = {};
 
-  local InfoHandler = core.InfoHandler;
+  
   core.DataFrame = CreateFrame("Frame");
-  local lastMessage = core.lastMessage;
 
-
+  local Helpers = core.Helpers;
+  local InfoHandler = core.InfoHandler;
 
   function InfoHandler:GetData()
     -- print("GetData aufgerufen");
@@ -35,8 +35,5 @@
         core.DataFrame:UnregisterEvent("CHAT_MSG_SYSTEM");
         -- print(lastMessageArray[1], lastMessageArray[2])
       end)
-        -- core.DataFrame:Hide() 
-    --  print(core.lastMessage)
-    -- print(#core.lastMessageArray)
     -- print("Get Data fertig");
   end;

@@ -10,6 +10,10 @@ local lastMessageArray = core.lastMessageArray;
 local instances = core.InstanceData.instances;
 local labelArray = {};
 local Helpers = core.Helpers;
+local RaidTab = core.RaidTab;
+local ButtonHandler = core.ButtonHandler;
+
+local tabs = {}; -- contains both tabs
 
 
 -- Config functions
@@ -27,7 +31,7 @@ end
 function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text, width, height)
   width = width or 140;
   height = height or 40;
-  local btn = CreateFrame("Button", nil, UIConfig.ScrollFrame, "GameMenuButtonTemplate");
+  local btn = CreateFrame("Button", nil, relativeFrame, "GameMenuButtonTemplate");
   btn:SetPoint(point, relativeFrame, relativePoint, 0, yOffset);
   btn:SetSize(width,height);
   btn:SetText(text);
@@ -38,13 +42,61 @@ end;
 
 function Config:CreateLabel(point, relativeFrame, relativePoint, yOffset, text, xOffset)
   xOffset = xOffset or 5
-  local label = UIConfig.ScrollFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
+  local label = relativeFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
   label:ClearAllPoints();
   label:SetFontObject("GameFontHighlight");
   label:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
   label:SetText(text);
   return label;
 end;
+
+
+local function Tab_OnClick(self)
+  PanelTemplates_SetTab(self:GetParent(), self:GetID());
+
+  local scrollChild = UIConfig.ScrollFrame:GetScrollChild();
+  if(scrollChild) then
+    scrollChild:Hide()
+  end
+
+  UIConfig.ScrollFrame:SetScrollChild(self.content);
+  self.content:Show();
+end
+
+local function SetTabs(frame, numTabs, ...)
+  frame.numTabs = numTabs;
+
+  local contents = {};
+  local frameName = frame:GetName();
+
+  for i = 1, numTabs do
+    local tab = CreateFrame("Button", frameName .."Tab"..i, frame, "CharacterFrameTabButtonTemplate");
+    tab:SetID(i);
+    tab:SetText(select(i, ...))
+    tab:SetScript("OnClick", Tab_OnClick);
+    tab:SetSize(550,30);
+
+    tab.content = CreateFrame("Frame", nil, UIConfig.ScrollFrame);
+    tab.content:SetSize(550,300);
+    tab.content:Hide();
+
+    -- tab.content.bg = tab.content:CreateTexture(nil, "BACKGROUND");
+    -- tab.content.bg:SetAllPoints(true);
+    -- tab.content.bg:SetColorTexture(math.random(), math.random(), math.random(), 0.6)
+
+    table.insert(tabs, tab);
+    table.insert(contents, tab.content);
+
+    if (i == 1) then
+      tab:SetPoint("TOPLEFT", UIConfig, "BOTTOMLEFT", 5, 7);
+    else
+      tab:SetPoint("TOPLEFT", _G[frameName.."Tab"..(i-1)], "TOPRIGHT", -14, 0)
+    end
+  end
+  Tab_OnClick(_G[frameName.."Tab1"]);
+
+  return unpack(contents);
+end
 
 function Config:CreateMenu()
   -- UIConfig is the parent frame for all other child frames and layers
@@ -81,21 +133,23 @@ function Config:CreateMenu()
   UIConfig.ScrollFrame:SetClipsChildren(true);
 
   -- Creating Child Frame
-  local child = CreateFrame("Frame", nil, UIConfig.ScrollFrame);
-  child:SetSize(550,300);
-  UIConfig.ScrollFrame:SetScrollChild(child);
+  -- local child = CreateFrame("Frame", nil, UIConfig.ScrollFrame);
+  -- child:SetSize(550,300);
+  -- UIConfig.ScrollFrame:SetScrollChild(child);
 
   -- Setting ScrollBar position
   UIConfig.ScrollFrame.ScrollBar:ClearAllPoints();
   UIConfig.ScrollFrame.ScrollBar:SetPoint("TOPLEFT", UIConfig.ScrollFrame, "TOPRIGHT", -12, -18);
-  UIConfig.ScrollFrame.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame, "BOTTOMRIGHT", -7, 18);
+  UIConfig.ScrollFrame.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame, "BOTTOMRIGHT", -7, 28);
 
-
+  local content1, content2 = SetTabs(UIConfig, 2, "Dungeons", "Raids")
+  
   -- Debugging Coloring child
   -- child.bg = child:CreateTexture(nil, "BACKGROUND");
   -- child.bg:SetAllPoints(true);
   -- child.bg:SetColorTexture(0.2, 0.6, 0, 0.8)
 
+  -- TESTING
   local function ShowData()
     local yPos = -30;
     local counter = 1;
@@ -137,47 +191,46 @@ function Config:CreateMenu()
           -- print(core.Helpers.getTableLen(instances));
           -- print("test if")
         else
-          child.InstanceLabel = self:CreateLabel("CENTER", child, "TOPLEFT", yPos, key, 30);
-          child.InstanceBoss = self:CreateLabel("CENTER", child, "TOP", yPos, coloredOutputStr, 0);
-          table.insert(labelArray, child.InstanceBoss);
+          content1.InstanceLabel = self:CreateLabel("CENTER", content1, "TOPLEFT", yPos, key, 30);
+          content1.InstanceBoss = self:CreateLabel("CENTER", content1, "TOP", yPos, coloredOutputStr, 0);
+          table.insert(labelArray, content1.InstanceBoss);
           -- print("test else")
         end;
         yPos = yPos - 30;
-        -- C_Timer.After(0.4, function()
-        --   print(coloredOutputStr);
-        -- end)
-        -- print(#bossTable)
       end
       
-      UIConfig.checkBtn:Hide();
-      UIConfig.rescanBtn:Show();
-      -- print("Check Ende");
+      content1.checkBtn:Hide();
+      content1.rescanBtn:Show();
+    --  print("Check Ende");
   end
 
   -- Check Button
-  UIConfig.checkBtn = self:CreateButton("CENTER", child, "CENTER", 0, "Check");
-  UIConfig.checkBtn:SetScript("OnClick", function()
+  content1.checkBtn = self:CreateButton("CENTER", content1, "CENTER", 0, "Check");
+  content1.checkBtn:SetScript("OnClick", function()
     ShowData();
+    -- print("Click Check")
   end)
 
   -- Reload Button
-  UIConfig.rescanBtn = self:CreateButton("TOPRIGHT", child, "TOPRIGHT", 0, "Rescan", 120);
-  UIConfig.rescanBtn:SetScript("OnClick", function()
+  content1.rescanBtn = self:CreateButton("TOPRIGHT", content1, "TOPRIGHT", 0, "Rescan", 120);
+  content1.rescanBtn:SetScript("OnClick", function()
     core.lastMessageArray = {};
     core.InfoHandler.GetData();
     C_Timer.After(0.5, function()
       ShowData();
     end)
   end)
-  UIConfig.rescanBtn:Hide();
+  content1.rescanBtn:Hide();
 
   -- Player label
   local _, englishClass, _ = UnitClass("player");
   local rPerc, gPerc, bPerc, _ = GetClassColor(englishClass)
-  UIConfig.charLabel = self:CreateLabel("CENTER", child, "TOP", -10, UnitName("player"),0);
-  UIConfig.charLabel:SetTextColor(rPerc,gPerc,bPerc);
+  content1.charLabel = self:CreateLabel("CENTER", content1, "TOP", -10, UnitName("player"),0);
+  content1.charLabel:SetTextColor(rPerc,gPerc,bPerc);
 
-  -- Creating Instance Labels
+  RaidTab:SetRaidTab(content2);
+
+  tabs[2]:Hide();
   UIConfig:Hide();
   return UIConfig;
 end;
