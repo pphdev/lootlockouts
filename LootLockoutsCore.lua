@@ -12,6 +12,8 @@ local function HandleSlashCommands(str)
   if(tostring(str) == "config") then
      core.Config.Toggle();
      return;
+  else
+    core.Config.Toggle();
   end;
 end;
 
@@ -23,8 +25,8 @@ end;
 function core:init(event, name)
   if (name ~= "LootLockouts") then return end;
 
-  SLASH_RELOAD1 = "/rl"; -- for quicker reloading
-  SlashCmdList.RELOAD = ReloadUI;
+  -- SLASH_RELOAD1 = "/rl"; -- for quicker reloading
+  -- SlashCmdList.RELOAD = ReloadUI;
 
   -- SLASH_FRAMESTK1 = "/fs"; -- for showing framestack tool
   -- SlashCmdList.RELOAD = function()
