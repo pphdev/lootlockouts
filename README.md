@@ -1,6 +1,6 @@
 # LootLockouts Addon
 LootLockouts Addon for Legion<br>
-Version: 7.3.5.0.1
+Version: 7.3.5.0.2
 
 In-game command: /ll config or click on the +-MiniMap symbol. Will get changed to /ll in the next version.
 
