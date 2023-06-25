@@ -14,7 +14,7 @@ local RaidTab = core.RaidTab;
 local ButtonHandler = core.ButtonHandler;
 
 local tabs = {}; -- contains both tabs
-
+local isChecked = false;
 
 -- Config functions
 function Config:Toggle()
@@ -149,7 +149,6 @@ function Config:CreateMenu()
   -- child.bg:SetAllPoints(true);
   -- child.bg:SetColorTexture(0.2, 0.6, 0, 0.8)
 
-  -- TESTING
   local function ShowData()
     local yPos = -30;
     local counter = 1;
@@ -175,15 +174,17 @@ function Config:CreateMenu()
           -- red coloring string
           if string.find(conBossTable, value3) then
             local coloredStr = string.format("|cffff0000%s|r", value3)
-            coloredOutputStr = string.join(" ", coloredOutputStr, coloredStr);
+            coloredOutputStr = string.join(" - ", coloredOutputStr, coloredStr);
             -- print(value3);
           else
             -- green coloring string
             local coloredStr = string.format("|cff00ff00%s|r", value3)
-            coloredOutputStr = string.join(" ", coloredOutputStr, coloredStr);
+            coloredOutputStr = string.join(" - ", coloredOutputStr, coloredStr);
           end
         end
-          -- print(Helpers:getTableLen(labelArray))       
+          -- print(Helpers:getTableLen(labelArray))
+        coloredOutputStr = string.gsub(coloredOutputStr, " - $", "")
+        coloredOutputStr = string.gsub(coloredOutputStr, "^%s*-+%s*", "")      
         if (Helpers:getTableLen(labelArray) == Helpers:getTableLen(instances)) then
           labelArray[counter]:SetText(coloredOutputStr);
           -- print(Helpers:getTableLen(bossIsDone))
@@ -208,6 +209,7 @@ function Config:CreateMenu()
   content1.checkBtn = self:CreateButton("CENTER", content1, "CENTER", 0, "Check");
   content1.checkBtn:SetScript("OnClick", function()
     ShowData();
+    RaidTab:SetRaidTab(content2);
     -- print("Click Check")
   end)
 
@@ -228,9 +230,10 @@ function Config:CreateMenu()
   content1.charLabel = self:CreateLabel("CENTER", content1, "TOP", -10, UnitName("player"),0);
   content1.charLabel:SetTextColor(rPerc,gPerc,bPerc);
 
-  RaidTab:SetRaidTab(content2);
+  -- RaidTab:SetRaidTab(content2);
 
-  tabs[2]:Hide();
+  -- tabs[2]:Disable();
+  -- tabs[1]:SetTextColor(0.5,0.5,0.5)
   UIConfig:Hide();
   return UIConfig;
 end;
