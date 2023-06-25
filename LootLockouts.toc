@@ -7,9 +7,9 @@
 ## SavedVariables: LootLockoutDB
 
 ButtonHandler.lua
-RaidTab.lua
 InstanceData.lua
 Helpers.lua
 InfoHandler.lua
+RaidTab.lua
 config.lua
 LootLockoutsCore.lua
