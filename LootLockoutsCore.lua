@@ -7,6 +7,7 @@ local addonName, core = ...; -- Namespace
 --   ["help"] = core:Print();
 -- };
 
+local mmtooltipTitle = string.format("|cff00ff00%s|r","LootLockouts")
 -- puts all arguments that are typed after "/ll" in str
 local function HandleSlashCommands(str)
   if(tostring(str) == "config") then
@@ -44,19 +45,22 @@ function core:init(event, name)
 
   local minimapFrame = CreateFrame("Button", "LootLockout_MinimapButton", Minimap)
   minimapFrame:SetSize(32, 32)
-  minimapFrame:SetHighlightTexture("Interface\\MINIMAP\\UI-Minimap-ZoomButton-Highlight")
-  minimapFrame:SetNormalTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
-  minimapFrame:SetPushedTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Down")
+  minimapFrame:SetHighlightTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
+  minimapFrame:SetNormalTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
+  minimapFrame:SetPushedTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
+  -- minimapFrame:SetHighlightTexture("Interface\\MINIMAP\\UI-Minimap-ZoomButton-Highlight")
+  -- minimapFrame:SetNormalTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
+  -- minimapFrame:SetPushedTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Down")
 
  
-
+  minimapFrame:ClearAllPoints();
   -- minimapFrame:SetPoint("CENTER", Minimap, "CENTER", 80 * cos(45), 80 * sin(45))
-  --  minimapFrame:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
+   minimapFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 0)
   minimapFrame:SetScript("OnClick", function(self, button)
     core.Config:Toggle();
   end)
-  local texture = minimapFrame:CreateTexture(nil, "BACKGROUND")
-  texture:SetTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
+  local texture = minimapFrame:CreateTexture(nil, "OVERLAY")
+  texture:SetTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
   -- texture:SetTexCoord(0, 1, 0, 1)
   texture:SetAllPoints(minimapFrame)
   minimapFrame.texture = texture;
@@ -70,10 +74,10 @@ function core:init(event, name)
   minimapFrame:SetScript("OnDragStop", function(self)
       self:StopMovingOrSizing()
   end)
-  
+
   minimapFrame:SetScript("OnEnter", function(self)
     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-    GameTooltip:SetText("LootLockouts")
+    GameTooltip:SetText((mmtooltipTitle.."\nClick to toggle AddOn window"))
     GameTooltip:Show()
   end)
 
