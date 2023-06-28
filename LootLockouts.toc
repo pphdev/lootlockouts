@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: pphdev (Wáyne/Tho)
 ## Title: LootLockouts
-## Version: 7.3.5.0.2
+## Version: 7.3.5.0.4
 ## Notes: AddOn for Loot Lockouts
 ## DefaultState: enabled
 ## SavedVariables: LootLockoutDB
