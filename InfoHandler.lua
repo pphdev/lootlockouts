@@ -3,6 +3,7 @@
   core.InfoHandler = {}; -- adds Config table to addon namespace
   core.lastMessage = nil;
   core.lastMessageArray = {};
+  _G["LootLockouts"] = core
 
   
   core.DataFrame = CreateFrame("Frame");
@@ -12,6 +13,7 @@
 
   function InfoHandler:GetData()
     -- print("GetData aufgerufen");
+    -- core.lastMessageArray = {};
     SendChatMessage(".loot_cd" ,"SAY", nil);
       core.DataFrame:RegisterEvent("CHAT_MSG_SYSTEM");
       core.DataFrame:SetScript("OnEvent", function(DataFrame, event, ...)
