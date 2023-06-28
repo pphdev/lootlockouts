@@ -48,14 +48,10 @@ function core:init(event, name)
   minimapFrame:SetHighlightTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
   minimapFrame:SetNormalTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
   minimapFrame:SetPushedTexture("Interface\\AddOns\\LootLockouts\\assets\\Mmbtn.blp")
-  -- minimapFrame:SetHighlightTexture("Interface\\MINIMAP\\UI-Minimap-ZoomButton-Highlight")
-  -- minimapFrame:SetNormalTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Up")
-  -- minimapFrame:SetPushedTexture("Interface\\MINIMAP\\UI-Minimap-ZoomInButton-Down")
 
- 
   minimapFrame:ClearAllPoints();
   -- minimapFrame:SetPoint("CENTER", Minimap, "CENTER", 80 * cos(45), 80 * sin(45))
-   minimapFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 0)
+  minimapFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 0)
   minimapFrame:SetScript("OnClick", function(self, button)
     core.Config:Toggle();
   end)
