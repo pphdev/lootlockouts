@@ -10,6 +10,7 @@ local raidkeys = core.InstanceData.raidkeys;
 local lastMessageArray = core.lastMessageArray;
 local labelArray = {};
 
+
 function RaidTab:ShowData(frame)
  
     local yPos = -30;
@@ -23,7 +24,7 @@ function RaidTab:ShowData(frame)
         for _, value1 in pairs(raids[raidkeys[keycounter]]) do
           table.insert(bossTable, value1);
           -- iteration over lastMessageArray
-          for _, value2 in pairs(lastMessageArray) do
+          for _, value2 in pairs(core.lastMessageArray) do
             if raidkeys[keycounter] == "EN (N)" then
               if string.find(value2, value1) and (not string.find(value2, "Mythic")) and (not string.find(value2, "Chest"))
               and (not string.find(value2, "Shade of Xavius")) and (not string.find(value2, "Heroic")) then
@@ -78,7 +79,7 @@ function RaidTab:ShowData(frame)
         yPos = yPos - 30;
         keycounter = keycounter + 1;
       end
-      
+      _G["LootLockoutsRaid"] = labelArray
       -- frame.checkBtn:Hide();
       -- frame.rescanBtn:Show();
     --  print("Check Ende");
