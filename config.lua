@@ -1,5 +1,5 @@
 -- Namespaces
-local _, core = ...;
+local LootLockouts, core = ...;
 core.Config = {}; -- adds Config table to addon namespace
 
 local Config = core.Config;
@@ -12,6 +12,8 @@ local labelArray = {};
 local Helpers = core.Helpers;
 local RaidTab = core.RaidTab;
 local ButtonHandler = core.ButtonHandler;
+
+
 
 local tabs = {}; -- contains both tabs
 local isChecked = false;
@@ -160,15 +162,16 @@ function Config:CreateMenu()
         for _, value1 in pairs(instances[key]) do
           table.insert(bossTable, value1);
           -- iteration over lastMessageArray
-          for _, value2 in pairs(lastMessageArray) do
+          for _, value2 in pairs(core.lastMessageArray) do
             if string.find(value2, value1) and string.find(value2, "Mythic") and (not string.find(value2, "Chest")) then
               table.insert(bossIsDone, value1);
-              -- print("Found: " .. value1);
+              -- print("Found: " .. value1  );
             end
           end
         end
   
         local coloredOutputStr = "";
+        _G["LootLookoutsConfig"] =  coloredOutputStr
         local conBossTable = table.concat(bossIsDone, " ");
         for key1, value3 in pairs(bossTable) do
           -- red coloring string
@@ -186,6 +189,7 @@ function Config:CreateMenu()
         coloredOutputStr = string.gsub(coloredOutputStr, " - $", "")
         coloredOutputStr = string.gsub(coloredOutputStr, "^%s*-+%s*", "")      
         if (Helpers:getTableLen(labelArray) == Helpers:getTableLen(instances)) then
+          labelArray[counter]:SetText("");
           labelArray[counter]:SetText(coloredOutputStr);
           -- print(Helpers:getTableLen(bossIsDone))
           counter = counter + 1;
@@ -199,7 +203,7 @@ function Config:CreateMenu()
         end;
         yPos = yPos - 30;
       end
-      
+      _G["LootLockoutsConfig"] = labelArray;
       content1.checkBtn:Hide();
       content1.rescanBtn:Show();
     --  print("Check Ende");
@@ -213,13 +217,15 @@ function Config:CreateMenu()
     -- print("Click Check")
   end)
 
-  -- Reload Button
+  -- Rescan Button
   content1.rescanBtn = self:CreateButton("TOPRIGHT", content1, "TOPRIGHT", 0, "Rescan", 120);
   content1.rescanBtn:SetScript("OnClick", function()
     core.lastMessageArray = {};
     core.InfoHandler.GetData();
+    -- table.insert(core.lastMessageArray, "Hymdall (Mythic)");
     C_Timer.After(0.5, function()
       ShowData();
+      RaidTab:SetRaidTab(content2)
     end)
   end)
   content1.rescanBtn:Hide();
