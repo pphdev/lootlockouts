@@ -1,6 +1,6 @@
 # LootLockouts Addon
 LootLockouts Addon for Legion<br>
-Version: 7.3.5.0.3
+Version: 7.3.5.0.4
 
 In-game command: /LL (or "/ll") or click on the +-MiniMap symbol. If you use ElvUI you have to use the "/ll" command for now.
 
